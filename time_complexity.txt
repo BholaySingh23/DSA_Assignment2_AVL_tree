@@ -1,0 +1,4 @@
+addEvent()  - O(log n)
+removeEvent()  - O(log n)
+searchEvent() - O(n)
+searchEventByRange() - O(log n)
