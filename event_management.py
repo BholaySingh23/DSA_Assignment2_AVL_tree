@@ -161,7 +161,7 @@ class EventManagementSystem:
             details = f"{event.event_ID} - {event.event_name} - {event.start_time.strftime('%d/%m/%Y %H:%M:%S')} - {event.end_time.strftime('%d/%m/%Y %H:%M:%S')}"
             return f"SEARCHED: {event_ID}\n{separator}\n{details}\n{separator}"
         else:
-            return "Event not found"
+            return f"No event found with event ID {event_ID}"
 
     def search_event_by_range(self, start_range_str, end_range_str):
         try:
@@ -169,10 +169,12 @@ class EventManagementSystem:
             end_range = datetime.datetime.strptime(end_range_str, "%d/%m/%Y %H:%M:%S")
         except ValueError:
             return "Invalid date format. Please use dd/mm/yyyy hh:mm:ss."
+        
         results = []
         self.tree.search_range(self.root, start_range, end_range, results)
         if not results:
-            return "No events found"
+            return f"No event found from {start_range.strftime('%d/%m/%Y %H:%M:%S')} to {end_range.strftime('%d/%m/%Y %H:%M:%S')}"
+        
         header = f"SEARCHED: Events from {start_range.strftime('%d/%m/%Y %H:%M:%S')} to {end_range.strftime('%d/%m/%Y %H:%M:%S')}"
         separator = "-" * 90
         events = []
